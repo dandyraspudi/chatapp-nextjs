@@ -3,12 +3,7 @@
 import { useOnlineUser } from "@/store/authStore";
 
 export default function Sidebar() {
-  const userList = useOnlineUser().userOnline;
-  const users = Object.entries(userList[0] || {}).map(([key, value]: [string, any]) => {
-    return {
-      ...value,
-    };
-  });
+  const userList = useOnlineUser((state) => state.userOnline);
 
   return (
     <div className="w-72 bg-gray-900 text-white">
@@ -20,13 +15,13 @@ export default function Sidebar() {
       </h2>
 
       <div className="space-y-2">
-        {users.map((user, i) => (
+        {userList.map((user, i) => (
           <div
             key={i}
             className="p-3 rounded-lg cursor-pointer flex items-center"
             style={{ height: "30px", padding: "0 10px" }}
           >
-            {user.name}
+            {user.username}
           </div>
         ))}
       </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useAuthStore, useOnlineUser } from "@/store/authStore";
 import { useRouter } from "next/navigation";
 import Pusher from "pusher-js";
@@ -34,8 +34,12 @@ export default function LoginPage() {
     const channel = pusher.subscribe("presence-chat");
 
     channel.bind("pusher:subscription_succeeded", (members: any) => {
-      console.log("online users:", members);
-      setOnlineUser(members);
+      const users = Object.entries(members.members).map(([id, info]: [string, any]) => ({
+        id,
+        username: info.name,
+      }));
+
+      setOnlineUser(users);
     });
 
     router.push("/");
@@ -48,7 +52,7 @@ export default function LoginPage() {
   return (
     <div className="flex items-center justify-center h-screen">
       <div className="p-6 border rounded-lg w-80">
-        <h2 className="text-xl font-bold mb-4">Login</h2>
+        <h2 className="text-xl font-bold mb-4">Join</h2>
 
         <input
           className="border w-full p-2 rounded mb-3"
@@ -61,7 +65,7 @@ export default function LoginPage() {
           onClick={handleLogin}
           className="bg-blue-500 text-white w-full p-2 rounded"
         >
-          Login
+          Join
         </button>
       </div>
     </div>

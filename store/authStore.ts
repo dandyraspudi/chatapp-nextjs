@@ -27,17 +27,17 @@ type User = {
 
 type OnlineUserListStore = {
   userOnline: User[];
-  setOnlineUser: (user: User) => void;
+  setOnlineUser: (user: User[]) => void;
   removeOnlineUser: (user: User) => void;
 };
 
 export const useOnlineUser = create<OnlineUserListStore>((set) => ({
   userOnline: [],
 
-  setOnlineUser: (user) =>
-    set((state) => ({
-      userOnline: [...state.userOnline, user],
-    })),
+  setOnlineUser: (users) =>
+    set({
+      userOnline: users,
+    }),
 
   removeOnlineUser: (user) =>
     set((state) => ({

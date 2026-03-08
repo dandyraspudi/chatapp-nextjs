@@ -17,7 +17,7 @@ export default function Home() {
       router.push("/login");
     }
   }, [user]);
-  
+
   return (
     <div className="flex h-screen">
       <Sidebar />
