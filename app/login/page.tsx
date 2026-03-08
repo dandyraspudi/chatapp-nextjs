@@ -1,19 +1,48 @@
 "use client";
 
-import { useState } from "react";
-import { useAuthStore } from "@/store/authStore";
+import { useState, useEffect } from "react";
+import { useAuthStore, useOnlineUser } from "@/store/authStore";
 import { useRouter } from "next/navigation";
+import Pusher from "pusher-js";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
   const login = useAuthStore((state) => state.login);
   const router = useRouter();
+  const setOnlineUser = useOnlineUser((state) => state.setOnlineUser);
 
   const handleLogin = () => {
     if (!username) return;
 
     login(username);
+    addUser();
+  };
+
+  const addUser = () => {
+    if (!username) return;
+
+    const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, {
+      cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER!,
+      authEndpoint: "/api/pusher/auth",
+      auth: {
+        params: {
+          user: username,
+        },
+      },
+    });
+
+    const channel = pusher.subscribe("presence-chat");
+
+    channel.bind("pusher:subscription_succeeded", (members: any) => {
+      console.log("online users:", members);
+      setOnlineUser(members);
+    });
+
     router.push("/");
+
+    return () => {
+      pusher.disconnect();
+    };
   };
 
   return (

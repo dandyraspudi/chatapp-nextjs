@@ -1,9 +1,17 @@
 "use client";
 
+import Pusher from "pusher-js";
 import { useAuthStore } from "@/store/authStore";
 export default function ChatHeader() {
   const username = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
+
+  // const clearMember = () => {
+  //   const channel = Pusher.subscribe("presence-chat");
+  //   channel.bind("pusher:member_removed", (member) => {
+  //     setOnlineUsers((prev) => prev.filter((user) => user.id !== member.id));
+  //   });
+  // }
 
   return (
     <div

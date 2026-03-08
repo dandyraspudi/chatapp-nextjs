@@ -1,0 +1,21 @@
+{
+  "name": "Chats App",
+  "short_name": "ChatsApp",
+  "description": "Realtime Chat Application",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/icons/chat.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/chat.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
