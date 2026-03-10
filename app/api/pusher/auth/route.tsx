@@ -7,6 +7,7 @@ export async function POST(req: Request) {
     const socketId = formData.get("socket_id") as string;
     const channelName = formData.get("channel_name") as string;
     const username = formData.get("user") as string;
+    const avatar = formData.get("avatar") as string;
     const randomId = function (length: number) {
       return Math.random()
         .toString(36)
@@ -17,6 +18,7 @@ export async function POST(req: Request) {
       user_id: username + randomId(5),
       user_info: {
         name: username,
+        avatar: avatar
       },
     });
 

@@ -1,28 +1,32 @@
 import { create } from "zustand";
 
 type AuthState = {
-  user: string | null;
-  login: (username: string) => void;
+  user: string;
+  avatar: string;
+  login: (username: string, avatar: string) => void;
   logout: () => void;
 };
 
 export const useAuthStore = create<AuthState>((set) => ({
-  user: null,
+  user: "",
+  avatar: "",
 
-  login: (username) =>
+  login: (username, avatar) =>
     set({
       user: username,
+      avatar: avatar
     }),
 
   logout: () =>
     set({
-      user: null,
+      user: "",
     }),
 }));
 
 type User = {
   id: string;
   username: string;
+  avatar: string;
 };
 
 type OnlineUserListStore = {
@@ -41,6 +45,6 @@ export const useOnlineUser = create<OnlineUserListStore>((set) => ({
 
   removeOnlineUser: (user) =>
     set((state) => ({
-      userOnline: state.userOnline.filter((item) => item.id !== user.id),
+      userOnline: state.userOnline.filter((item) => item.username !== user.username),
     })),
 }));
